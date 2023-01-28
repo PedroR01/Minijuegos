@@ -130,7 +130,7 @@ void TicTacToe::gameOver()
 	if (rematch != 0)
 		reset();
 	else
-		return;
+		exitGame();
 }
 
 void TicTacToe::reset()

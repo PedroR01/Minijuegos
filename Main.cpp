@@ -1,10 +1,10 @@
 #include <iostream>
-#include "TicTacToe.h"
 #include <stdio.h>
 #include <sstream>
+#include "View.h"
 
 int main()
 {
-	TicTacToe* game1 = new TicTacToe();
+	View* miniGames = new View();
 	return 0;
 }

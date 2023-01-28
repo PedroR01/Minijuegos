@@ -2,8 +2,9 @@
 #ifndef TICTACTOE_H
 #define TICTACTOE_H
 #include <iostream>
+#include "Games.h"
 
-class TicTacToe
+class TicTacToe : public Games
 {
 	char pos[3][3] =
 	{
