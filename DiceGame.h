@@ -18,10 +18,11 @@ public:
 	DiceGame();
 	~DiceGame();
 
-	void reroll(int diceSelected);
-	void printDices();
+	void turn(int player);
+	void reroll(std::vector <Dice*> dices, int diceSelected);
+	void printDices(std::vector <Dice*> dices);
 	void valueTable(int& totalPoints);
-	void confirmation();
+	void confirmation(std::vector <Dice*> dices);
 };
 
 #endif // !DICEGAME_H

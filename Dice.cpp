@@ -17,13 +17,14 @@ Dice::~Dice()
 
 void Dice::throw_()
 {
-	value = rand() % 6;
+	value = rand() % 6 + 1;
 	diceForm();
 }
 
 void Dice::diceForm()
 {
 	std::cout << "Player 1..." << std::endl;
+	std::cout << "Dice ID: " << id << std::endl;
 	//std::cout << "\n     |     |     " << std::endl;
 	//std::cout << "  " << pos[0][0] << "  |  " << pos[0][1] << "  |  " << pos[0][2] << std::endl;
 	std::cout << "   ___________ " << std::endl;
