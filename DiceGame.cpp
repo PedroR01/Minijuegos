@@ -7,13 +7,15 @@
 
 DiceGame::DiceGame()
 {
+	rematch = 1;
+	playerTurn = 1;
 	gamePoints = 0;
 	int diceId = 0;
 
 	for (int i = 0; i < DICESAMOUNT; i++)
 	{
 		diceId++;
-		playerDices.push_back(new Dice());
+		playerDices.push_back(new Dice(true));
 		playerDices.back()->setId(diceId);
 	}
 
@@ -21,15 +23,21 @@ DiceGame::DiceGame()
 	for (int i = 0; i < DICESAMOUNT; i++)
 	{
 		diceId++;
-		iaDices.push_back(new Dice());
+		iaDices.push_back(new Dice(false));
 		iaDices.back()->setId(diceId);
 	}
 
-	turn(1);
+	turn(playerTurn);
 }
 
 DiceGame::~DiceGame()
 {
+	for (auto ptr : playerDices)
+		delete ptr;
+
+	for (auto iaPtr : iaDices)
+		delete iaPtr;
+
 	std::cout << "\nQuiting Dice Game... Hope you had fun :)\nReturning to Main Menu..." << std::endl;
 }
 
@@ -56,16 +64,48 @@ void DiceGame::printDices(std::vector <Dice*> dices)
 	confirmation(dices);
 
 	if (iaDices.back()->getValue() == 0)
-		turn(2);
+	{
+		playerTurn = 2;
+		turn(playerTurn);
+	}
 
 	valueTable(gamePoints);
-	std::cout << "FINAL POINTS --> " << gamePoints << std::endl;
-	if (gamePoints > 0)
-		std::cout << "PLAYER 1 WINS" << std::endl;
-	else if (gamePoints < 0)
-		std::cout << "PLAYER 2 WINS" << std::endl;
-	else if (gamePoints == 0)
-		std::cout << "EPIC DRAW" << std::endl;
+
+	if (rematch != 0)
+	{
+		std::cout << "FINAL POINTS --> " << gamePoints << std::endl;
+		if (gamePoints > 0)
+		{
+			std::cout << "PLAYER 1 WINS" << std::endl;
+			playersBalance[0] ++;
+		}
+		else if (gamePoints < 0)
+		{
+			std::cout << "PLAYER 2 WINS" << std::endl;
+			playersBalance[1] ++;
+		}
+		else if (gamePoints == 0)
+			std::cout << "EPIC DRAW" << std::endl;
+
+		playerTurn = 1;
+
+		std::cout << "Want a rematch? (0 = EXIT): ";
+		std::cin >> rematch;
+
+		if (rematch != 0) // HOTFIX. WORKS FOR NOW BUT ITS NOT OPTIMAL
+		{
+			for (auto ptr : playerDices)
+				ptr->resetValue();
+
+			for (auto iaPtr : iaDices)
+				iaPtr->resetValue();
+
+			gamePoints = 0;
+			turn(playerTurn);
+		}
+	}
+	else
+		exitGame();
 }
 
 void DiceGame::confirmation(std::vector <Dice*> dices)
@@ -75,10 +115,10 @@ void DiceGame::confirmation(std::vector <Dice*> dices)
 	if (dices.back()->getValue() == 0)
 	{
 		do {
-			std::cout << "PRESS 1 to THROW your dices" << std::endl;
-			std::cin.clear();
-			std::cin.ignore(INT_MAX, '\n'); // Puede ser que este y el .clear vayan si y solo si falla el input ingresado?
+			std::cout << "PRESS 1 to THROW your dices (PLAYER " << playerTurn << ")." << std::endl;
 			std::cin >> input;
+			std::cin.clear();
+			std::cin.ignore(INT_MAX, '\n');
 		} while (input != 1 || std::cin.fail());
 	}
 	// REROLL TIME
@@ -91,9 +131,9 @@ void DiceGame::confirmation(std::vector <Dice*> dices)
 			std::cout << "         -------------------------------------            " << std::endl;
 			std::cout << "           INTRODUCE THE DICE/S ID TO REROLL              " << std::endl;
 			std::cout << "Introduce digit/s with space between (Input example -->1 2 3) " << std::endl;
+			std::getline(std::cin, idInput);
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
-			std::getline(std::cin, idInput);
 
 			if (idInput.empty())
 				return;

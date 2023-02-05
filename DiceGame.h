@@ -9,6 +9,7 @@ class DiceGame : public Games
 {
 private:
 	int gamePoints;
+	int playerTurn;
 
 public:
 

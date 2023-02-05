@@ -20,6 +20,7 @@ public:
 	void sendGameSelected(int gameSelected);
 
 	std::string showInstructions(int gameSelected);
+	int showPlayersBalance(int player);
 };
 
 #endif // !PRESENTER_H

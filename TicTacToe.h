@@ -15,7 +15,7 @@ class TicTacToe : public Games
 	int choice;
 	int row, column;
 	int turn = 1;
-	int rematch = 1;
+	//int rematch = 1;
 	bool draw = false;
 
 	void printBoard();

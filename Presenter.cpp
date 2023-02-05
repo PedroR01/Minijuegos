@@ -21,3 +21,8 @@ std::string Presenter::showInstructions(int gameSelected)
 {
 	return m_Game->gameInstructions(gameSelected);
 }
+
+int Presenter::showPlayersBalance(int player)
+{
+	return m_Game->getPlayerBalance(player);
+}

@@ -3,10 +3,11 @@
 #include <cstdlib>
 #include <time.h>
 
-Dice::Dice()
+Dice::Dice(bool whichPlayerDice)
 {
 	id = 0;
 	value = 0;
+	player = whichPlayerDice;
 
 	srand(time(0)); // Posible perdida de datos? Otra manera de instanciar la semilla?
 }
@@ -23,7 +24,11 @@ void Dice::throw_()
 
 void Dice::diceForm()
 {
-	std::cout << "Player 1..." << std::endl;
+	if (player)
+		std::cout << "PLAYER 1" << std::endl;
+	else
+		std::cout << "PLAYER 2" << std::endl;
+
 	std::cout << "Dice ID: " << id << std::endl;
 	//std::cout << "\n     |     |     " << std::endl;
 	//std::cout << "  " << pos[0][0] << "  |  " << pos[0][1] << "  |  " << pos[0][2] << std::endl;
@@ -44,6 +49,11 @@ void Dice::diceForm()
 void Dice::setId(int idCounter)
 {
 	id = idCounter;
+}
+
+void Dice::resetValue()
+{
+	this->value = 0;
 }
 
 int Dice::getValue()

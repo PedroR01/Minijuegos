@@ -118,9 +118,15 @@ bool TicTacToe::gameState() {
 void TicTacToe::gameOver()
 { // the number turn are inversed for the check because they change turn before winning
 	if (turn == 2 && draw == false)
+	{
 		cout << "\nCongratulations! Player 1 (X) has won the game" << endl;
+		playersBalance[0] ++;
+	}
 	else if (turn == 1 && draw == false)
+	{
 		cout << "\nCongratulations! Player 2 (O) has won the game" << endl;
+		playersBalance[1] ++;
+	}
 	else
 		cout << "\nGAME DRAW!" << endl;
 

@@ -7,14 +7,16 @@ class Dice
 private:
 	int id;
 	int value;
+	bool player;
 	void diceForm();
 
 public:
-	Dice();
+	Dice(bool whichPlayerDice);
 	~Dice();
 
 	void throw_();
 	void setId(int idCounter);
+	void resetValue();
 	int getValue();
 	int getId();
 };

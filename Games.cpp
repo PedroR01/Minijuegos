@@ -7,15 +7,12 @@
 Games::Games()
 {
 	currentGame = 0;
+	playersBalance[0] = 0; //Player1 wins
+	playersBalance[1] = 0; //Player2 wins
 }
 
 Games::~Games()
 {
-}
-
-int Games::balance()
-{
-	return 1;
 }
 
 std::string Games::parseNum(int num)
@@ -69,7 +66,7 @@ std::string Games::gameInstructions(int gameSelected)
 	}
 	else if (gameSelected == 2) // Dice instructions
 	{
-		return "DICE\nGAME RULES: Dice. Enjoy :)";
+		return "DICE\nGAME RULES: Each player will have 3 dices (each one with his specific id to reference). The more dices match with the same number the more points you get, and if the dice has a higher value it gets you more points. Also, each player will have a second time to throw the dice/s that want. Enjoy :)";
 	}
 	else if (gameSelected == 3) // Poker instructions
 	{
@@ -77,4 +74,22 @@ std::string Games::gameInstructions(int gameSelected)
 	}
 	else
 		return "ERROR";
+}
+
+void Games::inputValidation()
+{
+	int input = 0;
+	do {
+		std::cin >> input;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+	} while (input != 1 || std::cin.fail());
+}
+
+int Games::getPlayerBalance(int player)
+{
+	if (player == 1)
+		return playersBalance[0];
+	else
+		return playersBalance[1];
 }

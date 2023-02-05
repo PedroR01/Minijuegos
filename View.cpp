@@ -40,10 +40,11 @@ void View::showMainMenu()
 	showText("1) Tic-Tac-Toe");
 	showText("2) Dices");
 	showText("3) Poker");
-	showTextWithSection("4) Exit");
+	showText("4) Show players balance");
+	showTextWithSection("5) Exit");
 
 	int choice = 1;
-	selectOption(choice, 1, 4);
+	selectOption(choice, 1, 5);
 
 	if (choice >= 1 && choice < 3) // When other games are finished, change this condition for choice >= 1 && choice < 4
 	{
@@ -57,6 +58,13 @@ void View::showMainMenu()
 		std::cin.get();
 	}
 	else if (choice == 4)
+	{
+		showText("Player 1 wins --> " + parseNum(m_Presenter->showPlayersBalance(1)));
+		showTextWithSection("Player 2 wins --> " + parseNum(m_Presenter->showPlayersBalance(2)));
+		std::cin.get();
+		std::cin.get();
+	}
+	else if (choice == 5)
 		exit(0);
 
 	showMainMenu(); // Return to the menu when the user exits the current game (instance of the game is deleted)
@@ -70,9 +78,9 @@ void View::selectOption(int& input, int min, int max) // Allows the user to ente
 
 	do
 	{
+		std::cin >> input;
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n'); // This prevents the user from enter any other type of value that is not int, but to work needs to enter the value 2 times.
-		std::cin >> input;
 		if (input  < min || input > max)
 			showTextWithSection(ERROR);
 	} while (input < min || input > max && max != 0 || std::cin.fail());
